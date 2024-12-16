@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Remboursement</title>
+    <title>Remboursement</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -17,64 +17,54 @@
         .hidden {
             display: none;
         }
-        #card-type {
-            color: green;
-            font-weight: bold;
-            margin-top: 5px;
+        .card-icons img {
+            width: 50px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- En-tête -->
-    <header class="bg-blue-600 text-white py-4 shadow-lg text-center">
-        <h1 class="text-4xl font-bold">Service de Remboursement</h1>
-        <p class="mt-1 text-lg">Nous acceptons toutes les cartes bancaires</p>
+    <!-- HEADER -->
+    <header class="bg-blue-600 text-white py-4 shadow-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Service de Remboursement</h1>
+            <p class="mt-1 text-lg">Nous acceptons toutes les cartes bancaires</p>
+        </div>
     </header>
 
-    <!-- Section principale -->
+    <!-- MAIN FORM SECTION -->
     <section class="flex items-center justify-center min-h-screen">
         <div class="bg-white shadow-2xl rounded-lg p-8 w-full max-w-lg">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Formulaire de Remboursement</h2>
+            <div class="flex justify-center mb-6 card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/PayPal_logo.svg" alt="PayPal">
+            </div>
             <form id="remboursement-form" onsubmit="return validateForm(event)">
-                <!-- Prénom -->
                 <div class="mb-4">
-                    <label for="prenom" class="block text-sm font-medium text-gray-700">Prénom</label>
-                    <input type="text" id="prenom" name="prenom" placeholder="Ex : Jean" required
-                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm"
-                        oninput="validateTextInput(event, 'prenom-error')">
-                    <p id="prenom-error" class="error-message hidden">❌ Seules les lettres sont autorisées dans le prénom.</p>
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom du titulaire</label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
-
-                <!-- Nom -->
                 <div class="mb-4">
-                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom</label>
-                    <input type="text" id="nom" name="nom" placeholder="Ex : Dupont" required
-                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm"
-                        oninput="validateTextInput(event, 'nom-error')">
-                    <p id="nom-error" class="error-message hidden">❌ Seules les lettres sont autorisées dans le nom.</p>
+                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
+                    <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres.</p>
                 </div>
-
-                <!-- Numéro de carte -->
-                <div class="mb-4">
-                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
-                    <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
-                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm" oninput="detectCardType()">
-                    <p id="card-type" class="hidden"></p>
-                </div>
-
-                <!-- Date d'expiration -->
                 <div class="mb-4">
                     <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
-                    <input type="month" id="date-expiration" required class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm">
+                    <input type="month" id="date-expiration" name="date-expiration" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="date-error" class="error-message hidden">La date d'expiration est invalide.</p>
                 </div>
-
-                <!-- Code CVV -->
                 <div class="mb-6">
                     <label for="cvv" class="block text-sm font-medium text-gray-700">Code CVV</label>
                     <input type="text" id="cvv" name="cvv" placeholder="123" required maxlength="3"
-                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm">
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="cvv-error" class="error-message hidden">Le CVV doit contenir exactement 3 chiffres.</p>
                 </div>
-
                 <button type="submit"
                     class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
                     Confirmer le Remboursement
@@ -83,7 +73,7 @@
         </div>
     </section>
 
-    <!-- Pied de page -->
+    <!-- FOOTER -->
     <footer class="bg-gray-800 text-white py-6 mt-10">
         <div class="container mx-auto text-center">
             <p class="text-sm">© 2024 Service de Remboursement. Tous droits réservés.</p>
@@ -91,52 +81,50 @@
                 Contactez-nous: 
                 <a href="mailto:support@remboursement.com" class="text-blue-400 hover:underline">support@remboursement.com</a>
             </p>
+            <p class="mt-1">
+                Suivez-nous sur:
+                <a href="#" class="text-blue-400 hover:underline mx-1">Facebook</a> | 
+                <a href="#" class="text-blue-400 hover:underline mx-1">Twitter</a> | 
+                <a href="#" class="text-blue-400 hover:underline mx-1">Instagram</a>
+            </p>
         </div>
     </footer>
 
     <script>
-        // Validation des champs de texte (Prénom et Nom)
-        function validateTextInput(event, errorId) {
-            const inputField = event.target;
-            const errorField = document.getElementById(errorId);
-
-            if (/[^a-zA-ZÀ-ÿ\u0600-\u06FF\s]/.test(inputField.value)) {
-                errorField.classList.remove('hidden');
-                inputField.value = inputField.value.replace(/[^a-zA-ZÀ-ÿ\u0600-\u06FF\s]/g, '');
-            } else {
-                errorField.classList.add('hidden');
-            }
-        }
-
-        // Détecter le type de carte
-        function detectCardType() {
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
-            const cardTypeDisplay = document.getElementById('card-type');
-
-            if (/^4/.test(cardNumber)) {
-                cardTypeDisplay.textContent = "Carte détectée : Visa";
-                cardTypeDisplay.classList.remove('hidden');
-            } else if (/^5[1-5]/.test(cardNumber)) {
-                cardTypeDisplay.textContent = "Carte détectée : MasterCard";
-                cardTypeDisplay.classList.remove('hidden');
-            } else {
-                cardTypeDisplay.classList.add('hidden');
-            }
-        }
-
-        // Validation du formulaire complet
         function validateForm(event) {
             event.preventDefault();
+            const nom = document.getElementById('nom').value;
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+            const cvv = document.getElementById('cvv').value;
+            const expirationDate = new Date(document.getElementById('date-expiration').value);
+            const currentDate = new Date();
 
-            const prenom = document.getElementById('prenom').value.trim();
-            const nom = document.getElementById('nom').value.trim();
+            let valid = true;
 
-            if (prenom === "" || nom === "") {
-                alert("❌ Veuillez remplir tous les champs correctement.");
-                return false;
+            if (!/^\d{16}$/.test(cardNumber)) {
+                document.getElementById('card-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('card-error').classList.add('hidden');
             }
 
-            alert("✅ Le remboursement a été confirmé avec succès !");
+            if (!/^\d{3}$/.test(cvv)) {
+                document.getElementById('cvv-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('cvv-error').classList.add('hidden');
+            }
+
+            if (expirationDate <= currentDate || isNaN(expirationDate)) {
+                document.getElementById('date-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('date-error').classList.add('hidden');
+            }
+
+            if (valid) {
+                alert("✅ Le remboursement a été confirmé !");
+            }
         }
     </script>
 </body>
