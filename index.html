@@ -51,11 +51,11 @@
                         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div class="mb-4">
-                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
-                    <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required
-                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres.</p>
-                </div>
+    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
+    <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+    <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres et être une carte Visa ou MasterCard.</p>
+</div>
                 <div class="mb-4">
                     <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
                     <input type="month" id="date-expiration" name="date-expiration" required
