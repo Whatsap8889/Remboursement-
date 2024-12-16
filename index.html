@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remboursement</title>
+    <title>Formulaire de Remboursement</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -25,29 +25,38 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- HEADER -->
+    <!-- En-tête -->
     <header class="bg-blue-600 text-white py-4 shadow-lg text-center">
         <h1 class="text-4xl font-bold">Service de Remboursement</h1>
         <p class="mt-1 text-lg">Nous acceptons toutes les cartes bancaires</p>
     </header>
 
-    <!-- MAIN FORM SECTION -->
+    <!-- Section principale -->
     <section class="flex items-center justify-center min-h-screen">
         <div class="bg-white shadow-2xl rounded-lg p-8 w-full max-w-lg">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Formulaire de Remboursement</h2>
             <form id="remboursement-form" onsubmit="return validateForm(event)">
-                <!-- Nom (النسب) -->
+                <!-- Prénom -->
                 <div class="mb-4">
-                    <label for="nom" class="block text-sm font-medium text-gray-700">النسب</label>
-                    <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required
+                    <label for="prenom" class="block text-sm font-medium text-gray-700">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" placeholder="Ex : Jean" required
                         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm"
-                        oninput="validateNameInput(event)">
-                    <p id="nom-error" class="error-message hidden">❌ يُسمح فقط بالأحرف في خانة النسب.</p>
+                        oninput="validateTextInput(event, 'prenom-error')">
+                    <p id="prenom-error" class="error-message hidden">❌ Seules les lettres sont autorisées dans le prénom.</p>
                 </div>
 
-                <!-- Numéro de la carte -->
+                <!-- Nom -->
                 <div class="mb-4">
-                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex : Dupont" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm"
+                        oninput="validateTextInput(event, 'nom-error')">
+                    <p id="nom-error" class="error-message hidden">❌ Seules les lettres sont autorisées dans le nom.</p>
+                </div>
+
+                <!-- Numéro de carte -->
+                <div class="mb-4">
+                    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
                     <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
                         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm" oninput="detectCardType()">
                     <p id="card-type" class="hidden"></p>
@@ -74,22 +83,32 @@
         </div>
     </section>
 
-    <script>
-        // منع إدخال الأرقام في حقل النسب
-        function validateNameInput(event) {
-            const inputField = event.target;
-            const errorField = document.getElementById('nom-error');
+    <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">© 2024 Service de Remboursement. Tous droits réservés.</p>
+            <p class="mt-2">
+                Contactez-nous: 
+                <a href="mailto:support@remboursement.com" class="text-blue-400 hover:underline">support@remboursement.com</a>
+            </p>
+        </div>
+    </footer>
 
-            // تحقق من أن المدخلات تحتوي فقط على أحرف
-            if (/[^a-zA-Z\s\u0600-\u06FF]/.test(inputField.value)) {
+    <script>
+        // Validation des champs de texte (Prénom et Nom)
+        function validateTextInput(event, errorId) {
+            const inputField = event.target;
+            const errorField = document.getElementById(errorId);
+
+            if (/[^a-zA-ZÀ-ÿ\u0600-\u06FF\s]/.test(inputField.value)) {
                 errorField.classList.remove('hidden');
-                inputField.value = inputField.value.replace(/[^a-zA-Z\s\u0600-\u06FF]/g, '');
+                inputField.value = inputField.value.replace(/[^a-zA-ZÀ-ÿ\u0600-\u06FF\s]/g, '');
             } else {
                 errorField.classList.add('hidden');
             }
         }
 
-        // كشف نوع البطاقة
+        // Détecter le type de carte
         function detectCardType() {
             const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
             const cardTypeDisplay = document.getElementById('card-type');
@@ -105,26 +124,19 @@
             }
         }
 
-        // التحقق من صحة النموذج
+        // Validation du formulaire complet
         function validateForm(event) {
             event.preventDefault();
 
-            const nom = document.getElementById('nom').value;
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
-            const expirationDate = document.getElementById('date-expiration').value;
-            const cvv = document.getElementById('cvv').value;
+            const prenom = document.getElementById('prenom').value.trim();
+            const nom = document.getElementById('nom').value.trim();
 
-            let valid = true;
-
-            // التحقق من النسب
-            if (nom.trim() === '') {
-                document.getElementById('nom-error').classList.remove('hidden');
-                valid = false;
+            if (prenom === "" || nom === "") {
+                alert("❌ Veuillez remplir tous les champs correctement.");
+                return false;
             }
 
-            if (valid) {
-                alert("✅ Le remboursement a été confirmé avec succès !");
-            }
+            alert("✅ Le remboursement a été confirmé avec succès !");
         }
     </script>
 </body>
