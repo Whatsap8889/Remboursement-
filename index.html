@@ -10,12 +10,16 @@
         body {
             font-family: 'Roboto', sans-serif;
         }
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+    <div class="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
         <h1 class="text-2xl font-bold text-gray-800 text-center mb-6">Remboursement</h1>
-        <form action="#" method="POST">
+        <form id="remboursement-form" onsubmit="return validateForm()">
             <!-- Nom du titulaire de la carte -->
             <div class="mb-4">
                 <label for="nom" class="block text-sm font-medium text-gray-700">Nom du titulaire</label>
@@ -27,18 +31,21 @@
                 <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
                 <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required
                     class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <p id="card-error" class="error-message hidden">Veuillez entrer un numéro de carte valide.</p>
             </div>
             <!-- Date d'expiration -->
             <div class="mb-4">
                 <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
                 <input type="month" id="date-expiration" name="date-expiration" required
                     class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <p id="date-error" class="error-message hidden">La date d'expiration est invalide.</p>
             </div>
             <!-- Code CVV -->
             <div class="mb-6">
-                <label for="cvv"class="block text-sm font-medium text-gray-700">Code CVV</label>
+                <label for="cvv" class="block text-sm font-medium text-gray-700">Code CVV</label>
                 <input type="text" id="cvv" name="cvv" placeholder="123" required
                     class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                <p id="cvv-error" class="error-message hidden">Veuillez entrer un CVV valide (3 chiffres).</p>
             </div>
             <!-- Bouton de confirmation -->
             <button type="submit"
@@ -47,5 +54,45 @@
             </button>
         </form>
     </div>
+    <script>
+        // Fonction de validation
+        function validateForm() {
+            // Récupérer les valeurs des champs
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+            const cvv = document.getElementById('cvv').value;
+            const expirationDate = new Date(document.getElementById('date-expiration').value);
+            const currentDate = new Date();
+
+            let valid = true;
+
+            // Vérification du numéro de carte (16 chiffres)
+            const cardRegex = /^[0-9]{16}$/;
+            if (!cardRegex.test(cardNumber)) {
+                document.getElementById('card-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('card-error').classList.add('hidden');
+            }
+
+            // Vérification du CVV (3 chiffres)
+            const cvvRegex = /^[0-9]{3}$/;
+            if (!cvvRegex.test(cvv)) {
+                document.getElem entById('cvv-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('cvv-error').classList.add('hidden');
+            }
+
+            // Vérification de la date d'expiration
+            if (expirationDate <= currentDate) {
+                document.getElementById('date-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('date-error').classList.add('hidden');
+            }
+
+            return valid;
+        }
+    </script>
 </body>
 </html>
