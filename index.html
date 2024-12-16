@@ -56,56 +56,6 @@
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
     <p id="card-error" class="error-message hidden">Le numéro de la carte doit contenir 16 chiffres et être une carte Visa ou MasterCard.</p>
 </div>
-Bouton de confirmation -->
-            <button type="submit"
-                class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                Confirmer
-            </button>
-        </form>
-    </div>
-
-    <script>
-        // تنسيق إدخال رقم البطاقة (إضافة مسافات بعد كل 4 أرقام)
-        function formatCardInput(event) {
-            const input = event.target;
-            input.value = input.value.replace(/\s+/g, '').replace(/(\d{4})/g, '$1 ').trim();
-        }
-
-        // التحقق من نوع البطاقة
-        function validateCardNumber(cardNumber) {
-            // إزالة المسافات
-            cardNumber = cardNumber.replace(/\s+/g, '');
-            const visaRegex = /^4[0-9]{15}$/; // Visa يبدأ بـ 4 ويتكون من 16 رقم
-            const masterCardRegex = /^(5[1-5][0-9]{14}|2(2[2-9][0-9]{2}|2[3-9][0-9]{1}|[3-6][0-9]{2}|7[0-1][0-9]{1}|720)[0-9]{12})$/; // MasterCard
-
-            if (visaRegex.test(cardNumber)) {
-                return "Visa";
-            } else if (masterCardRegex.test(cardNumber)) {
-                return "MasterCard";
-            }
-            return null;
-        }
-
-        // التحقق من صحة النموذج
-        function validateForm(event) {
-            event.preventDefault();
-
-            const cardNumberInput = document.getElementById('numero-carte');
-            const cardNumber = cardNumberInput.value;
-            const cardError = document.getElementById('card-error');
-
-            const cardType = validateCardNumber(cardNumber);
-
-            if (cardType) {
-                cardError.classList.add('hidden');
-                alert(`✅ Le numéro de carte est valide. Type de carte : ${cardType}`);
-            } else {
-                cardError.classList.remove('hidden');
-            }
-        }
-    </script>
-</body>
-</html>
                 <div class="mb-4">
                     <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
                     <input type="month" id="date-expiration" name="date-expiration" required
