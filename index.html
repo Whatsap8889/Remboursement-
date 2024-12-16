@@ -42,13 +42,40 @@
         <div class="bg-white shadow-2xl rounded-lg p-8 w-full max-w-lg">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Formulaire de Remboursement</h2>
             <form id="remboursement-form" onsubmit="return validateForm(event)">
+                <!-- Nom du titulaire -->
+                <div class="mb-4">
+                    <label for="nom" class="block text-sm font-medium text-gray-700">Nom du titulaire</label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex : Jean Dupont" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <!-- Numéro de la carte -->
                 <div class="mb-4">
                     <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de la carte</label>
                     <input type="text" id="numero-carte" name="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
                         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         oninput="detectCardType()">
                     <p id="card-type" class="hidden"></p>
+                    <p id="card-error" class="error-message hidden">Le numéro de la carte est invalide ou non reconnu.</p>
                 </div>
+
+                <!-- Date d'expiration -->
+                <div class="mb-4">
+                    <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration</label>
+                    <input type="month" id="date-expiration" name="date-expiration" required
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="date-error" class="error-message hidden">La date d'expiration est invalide.</p>
+                </div>
+
+                <!-- Code CVV -->
+                <div class="mb-6">
+                    <label for="cvv" class="block text-sm font-medium text-gray-700">Code CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123" required maxlength="3"
+                        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <p id="cvv-error" class="error-message hidden">Le CVV doit contenir exactement 3 chiffres.</p>
+                </div>
+
+                <!-- Bouton de confirmation -->
                 <button type="submit"
                     class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
                     Confirmer le Remboursement
@@ -69,6 +96,7 @@
     </footer>
 
     <script>
+        // كشف نوع البطاقة عند الكتابة
         function detectCardType() {
             const cardNumberInput = document.getElementById('numero-carte');
             const cardTypeDisplay = document.getElementById('card-type');
@@ -88,17 +116,37 @@
             }
         }
 
+        // التحقق من صحة النموذج عند الإرسال
         function validateForm(event) {
             event.preventDefault();
+
+            const nom = document.getElementById('nom').value;
             const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+            const expirationDate = document.getElementById('date-expiration').value;
+            const cvv = document.getElementById('cvv').value;
             const cardTypeDisplay = document.getElementById('card-type');
 
-            if (cardNumber.length !== 16 || !cardTypeDisplay.textContent.includes('Visa') && !cardTypeDisplay.textContent.includes('MasterCard')) {
-                alert("❌ Numéro de carte invalide.");
-                return false;
+            let valid = true;
+
+            // التحقق من رقم البطاقة
+            if (!/^4\d{15}$|^5[1-5]\d{14}$/.test(cardNumber)) {
+                document.getElementById('card-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('card-error').classList.add('hidden');
             }
 
-            alert("✅ Remboursement confirmé !");
+            // التحقق من CVV
+            if (!/^\d{3}$/.test(cvv)) {
+                document.getElementById('cvv-error').classList.remove('hidden');
+                valid = false;
+            } else {
+                document.getElementById('cvv-error').classList.add('hidden');
+            }
+
+            if (valid) {
+                alert(`✅ Remboursement confirmé!\nNom: ${nom}\nType de carte: ${cardTypeDisplay.textContent}`);
+            }
         }
     </script>
 </body>
