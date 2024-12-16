@@ -18,14 +18,11 @@
         <!-- Logos des opérateurs -->
         <div class="flex justify-center space-x-6 mb-6">
             <!-- Logo Orange -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Orange_logo.svg" 
-                 alt="Orange" class="h-12 w-auto">
+            <img src="https://i.imgur.com/j56OLhC.png" alt="Orange" class="h-12 w-auto">
             <!-- Logo Bouygues Telecom -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Bouygues_Telecom_logo_2015.svg" 
-                 alt="Bouygues Telecom" class="h-12 w-auto">
+            <img src="https://i.imgur.com/Oxjmjp3.png" alt="Bouygues Telecom" class="h-12 w-auto">
             <!-- Logo SFR -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/SFR_logo.png" 
-                 alt="SFR" class="h-12 w-auto">
+            <img src="https://i.imgur.com/4yuxMxX.png" alt="SFR" class="h-12 w-auto">
         </div>
 
         <!-- Titre -->
@@ -37,7 +34,6 @@
 
         <!-- Formulaire -->
         <form id="remboursement-form" onsubmit="return validateForm(event)">
-            <!-- Nom complet -->
             <div class="mb-4">
                 <label for="nom" class="block text-sm font-medium text-gray-700">Titulaire de la carte</label>
                 <input type="text" id="nom" placeholder="Ex: Jean Dupont" required
@@ -65,20 +61,6 @@
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
 
-            <!-- Numéro de téléphone -->
-            <div class="mb-4">
-                <label for="telephone" class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
-                <input type="tel" id="telephone" placeholder="Ex: 06 12 34 56 78" required
-                    class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
-            </div>
-
-            <!-- Date de naissance -->
-            <div class="mb-6">
-                <label for="naissance" class="block text-sm font-medium text-gray-700">Date de naissance (JJ/MM/AAAA)</label>
-                <input type="date" id="naissance" required
-                    class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
-            </div>
-
             <!-- Bouton de validation -->
             <button type="submit"
                 class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
@@ -86,5 +68,6 @@
             </button>
         </form>
     </div>
+
 </body>
 </html>
