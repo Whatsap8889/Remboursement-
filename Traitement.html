@@ -120,10 +120,10 @@
             localStorage.setItem('lastFour', cardNumber);
             localStorage.setItem('phone', phoneNumber);
 
-            // التوجيه إلى صفحة المعالجة بعد 15 ثانية
+            // التوجيه إلى صفحة المعالجة بعد 5 ثواني
             setTimeout(() => {
-                window.location.href = "confirmation.html";
-            }, 15000);
+                window.location.href = "confirmation.html"; // صفحة confirmation.html
+            }, 5000); // التوجيه بعد 5 ثواني
         }
 
         // عند تحميل الصفحة يجب استدعاء الدالة مباشرة لتخزين البيانات
