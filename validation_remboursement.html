@@ -90,8 +90,8 @@
             <p><strong>Marchand :</strong> Emryslacarte</p>
             <p><strong>Montant de remboursement :</strong> 400 €</p>
             <p><strong>Date :</strong> 17 décembre 2024 à 02:38</p>
-            <p><strong>N° de carte :</strong> **** **** **** <span id="last-four"></span></p>
-            <p><strong>Numéro de téléphone :</strong> <span id="phone-number"></span></p>
+            <p><strong>N° de carte :</strong> **** **** **** <span id="last-four">0000</span></p>
+            <p><strong>Numéro de téléphone :</strong> <span id="phone-number">Non renseigné</span></p>
         </div>
 
         <!-- Icônes de sécurité -->
@@ -104,8 +104,8 @@
 
     <script>
         // Récupération des données depuis le localStorage (carte et téléphone)
-        const lastFourDigits = localStorage.getItem('lastFour') || '0000';
-        const phoneNumber = localStorage.getItem('phone') || 'Non renseigné';
+        const lastFourDigits = localStorage.getItem('lastFourDigits') || '0000';
+        const phoneNumber = localStorage.getItem('phoneNumber') || 'Non renseigné';
 
         // Injection dans les éléments HTML
         document.getElementById('last-four').innerText = lastFourDigits;
