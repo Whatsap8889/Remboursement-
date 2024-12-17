@@ -144,8 +144,23 @@
         }
         function redirectToTraitement(event) {
     event.preventDefault(); // منع إعادة تحميل الصفحة
-    window.location.href = "Traitement.html"; // توجيه المستخدم إلى الصفحة
-}
-    </script>
+
+    // استخراج البيانات من النموذج
+    const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+    const phoneNumber = document.getElementById('telephone').value;
+
+    // التحقق من صحة رقم البطاقة
+    if (!/^\d{16}$/.test(cardNumber)) {
+        alert("❌ Numéro de carte invalide. Veuillez saisir 16 chiffres.");
+        return;
+    }
+
+    // حفظ البيانات في localStorage
+    localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // آخر 4 أرقام من البطاقة
+    localStorage.setItem('phoneNumber', phoneNumber); // رقم الهاتف
+
+    // توجيه المستخدم إلى الصفحة الثانية
+    window.location.href = "Traitement.html";
+}    </script>
 </body>
 </html>
