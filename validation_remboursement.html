@@ -4,105 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validation de Remboursement</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f7f9fc;
+            background-color: #f3f4f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
         .container {
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
             width: 100%;
             text-align: center;
-            animation: fadeIn 1.2s ease-in-out;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .secure-icons img {
             width: 100%;
-            max-width: 200px;
+            max-width: 250px;
             margin-bottom: 20px;
         }
-
         .orange-box {
-            background-color: #ff9800;
-            color: #fff;
+            background-color: #ffb74d;
+            color: #333;
             border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 15px 0;
         }
-
         .orange-box h2 {
-            margin: 0 0 10px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .orange-box p {
             margin: 0;
             font-size: 16px;
-            line-height: 1.5;
+            color: #000;
+            font-weight: bold;
         }
-
+        .orange-box p {
+            margin: 10px 0 0;
+            font-size: 14px;
+        }
         .orange-box a {
-            color: #fff;
+            color: blue;
             text-decoration: underline;
-            font-weight: 500;
         }
-
         .info {
             text-align: left;
-            font-size: 15px;
-            color: #333;
-            margin: 20px 0;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #555;
         }
-
         .info p {
-            margin: 10px 0;
+            margin: 5px 0;
         }
-
         .info strong {
             color: #000;
-            font-weight: 500;
         }
-
         .footer-icons img {
             width: 100%;
-            max-width: 350px;
-            margin-top: 20px;
-        }
-
-        .btn-validate {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-validate:hover {
-            background-color: #45a049;
+            max-width: 300px;
+            margin: 10px auto;
         }
     </style>
 </head>
@@ -132,12 +95,9 @@
             <p><strong>Numéro de téléphone :</strong> <span id="phone-number">Non renseigné</span></p>
         </div>
 
-        <!-- Bouton -->
-        <button class="btn-validate">Valider le remboursement</button>
-
         <!-- Icônes de sécurité -->
         <div class="footer-icons">
-            <img src="secure-icons.png" alt="Verified by Visa, 3D Secure, MasterCard SecureCode">
+            <img src="IMG_4110.jpeg" alt="Verified by Visa, 3D Secure, MasterCard SecureCode">
         </div>
     </div>
 
