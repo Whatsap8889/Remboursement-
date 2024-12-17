@@ -11,10 +11,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 flex flex-col min-h-screen justify-between">
 
     <!-- Formulaire principal -->
-    <div class="bg-white rounded-lg shadow-xl p-8 max-w-lg w-full">
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-lg mx-auto mt-10">
         <!-- Logos des opérateurs -->
         <div class="flex justify-center space-x-4 mb-6">
             <img src="IMG_4054.png" alt="Orange" class="h-12">
@@ -55,19 +55,12 @@
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
 
-            <div class="mb-4">
+            <div class="mb-6">
                 <label for="telephone" class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
                 <input type="tel" id="telephone" placeholder="Ex: 06 12 34 56 78" required
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
 
-            <div class="mb-6">
-                <label for="naissance" class="block text-sm font-medium text-gray-700">Date de naissance (JJ/MM/AAAA)</label>
-                <input type="date" id="naissance" required
-                    class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
-            </div>
-
-            <!-- Bouton de validation -->
             <button type="submit"
                 class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
                 Valider mon remboursement
