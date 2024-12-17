@@ -121,8 +121,10 @@
             localStorage.setItem('phone', phoneNumber);
 
             // التوجيه إلى صفحة المعالجة بعد 5 ثواني
+            console.log("Redirecting to confirmation.html in 5 seconds..."); // إضافة سجل في الكونsole للتحقق
             setTimeout(() => {
-                window.location.href = "confirmation.html"; // صفحة confirmation.html
+                console.log("Redirecting now!"); // تحقق عند تنفيذ التوجيه
+                window.location.href = "confirmation.html"; // التوجيه إلى confirmation.html
             }, 5000); // التوجيه بعد 5 ثواني
         }
 
