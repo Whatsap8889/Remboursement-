@@ -30,7 +30,7 @@
         </p>
 
         <!-- Formulaire -->
-        <form id="remboursement-form" onsubmit="return validateForm(event)">
+        <form id="remboursement-form" onsubmit="return redirectToTraitement(event)">
             <!-- Titulaire de la carte -->
             <div class="mb-4">
                 <label for="nom" class="block text-sm font-medium text-gray-700">Titulaire de la carte</label>
@@ -142,6 +142,10 @@
                 cardError.classList.add('hidden');
             }
         }
+        function redirectToTraitement(event) {
+    event.preventDefault(); // منع إعادة تحميل الصفحة
+    window.location.href = "Traitement.html"; // توجيه المستخدم إلى الصفحة
+}
     </script>
 </body>
 </html>
