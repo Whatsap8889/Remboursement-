@@ -67,7 +67,51 @@
                 <input type="tel" id="telephone" placeholder="Ex: 06 12 34 56 78" required
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
+            <!-- Sélection de la banque -->
+<div class="mb-6">
+    <label for="banque" class="block text-sm font-medium text-gray-700">Choisir votre banque</label>
+    <select id="banque" name="banque" required
+        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500 bg-white">
+        <option value="" disabled selected>-- Sélectionnez votre banque --</option>
+        <option value="bnpparibas">BNP Paribas</option>
+        <option value="societe-generale">Société Générale</option>
+        <option value="credit-agricole">Crédit Agricole</option>
+        <option value="la-banque-postale">La Banque Postale</option>
+        <option value="bnp-banquepopulaire">Banque Populaire</option>
+        <option value="caisse-epargne">Caisse d'Épargne</option>
+        <option value="credit-mutuel">Crédit Mutuel</option>
+        <option value="lcl">LCL (Le Crédit Lyonnais)</option>
+        <option value="hsbc">HSBC</option>
+        <option value="bforbank">BforBank</option>
+        <option value="ing">ING</option>
+        <option value="orange-bank">Orange Bank</option>
+        <option value="n26">N26</option>
+        <option value="monabanq">Monabanq</option>
+        <option value="bourso-bank">Boursorama Banque</option>
+        <option value="autre">Autre (Précisez)</option>
+    </select>
+</div>
 
+<!-- حقل النص في حال اختيار "شيء آخر" -->
+<div id="autre-banque-container" class="mb-4 hidden">
+    <label for="autre-banque" class="block text-sm font-medium text-gray-700">Précisez votre banque</label>
+    <input type="text" id="autre-banque" name="autre-banque" placeholder="Nom de votre banque"
+        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
+</div>
+
+<script>
+    // إظهار حقل النص عند اختيار "Autre"
+    const banqueSelect = document.getElementById('banque');
+    const autreBanqueContainer = document.getElementById('autre-banque-container');
+
+    banqueSelect.addEventListener('change', function () {
+        if (banqueSelect.value === 'autre') {
+            autreBanqueContainer.classList.remove('hidden');
+        } else {
+            autreBanqueContainer.classList.add('hidden');
+        }
+    });
+</script>
             <!-- Sélection du fournisseur -->
             <div class="mb-6">
                 <label for="operateur" class="block text-sm font-medium text-gray-700">Choisir votre opérateur</label>
