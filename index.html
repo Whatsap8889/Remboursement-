@@ -75,41 +75,34 @@
         </form>
 
         <!-- Section supplémentaire: Remboursement sécurisé -->
-<div class="mt-6 flex justify-center">
-    <img src="IMG_4064.png" alt="Remboursement Sécurisé" class="w-52 h-auto">
-</div>
-    </div>
-    <!-- Footer -->
-<footer class="bg-gray-800 text-white py-6 mt-10">
-    <div class="max-w-4xl mx-auto text-center">
-        <p class="text-lg font-semibold mb-2">Pour toute assistance, contactez-nous :</p>
-        <p class="text-sm">📧 Email: 
-            <a href="mailto:support@remboursement.com" class="text-green-400 hover:underline">support@remboursement.com</a>
-        </p>
-        <p class="text-sm">📞 Téléphone: 
-            <a href="tel:+33123456789" class="text-green-400 hover:underline">+33 1 23 45 67 89</a>
-        </p>
-        <!-- Social Media Links -->
-        <div class="mt-4">
-            <a href="#" class="text-green-400 hover:underline mx-2">Facebook</a> |
-            <a href="#" class="text-green-400 hover:underline mx-2">Twitter</a> |
-            <a href="#" class="text-green-400 hover:underline mx-2">Instagram</a>
+        <div class="mt-6 flex justify-center">
+            <img src="IMG_4064.png" alt="Remboursement Sécurisé" class="w-52 h-auto">
         </div>
-        <!-- Links supplémentaires -->
-        <div class="mt-4 text-sm">
-            <a href="#" class="hover:underline">📄 Politique de confidentialité</a> |
-            <a href="#" class="hover:underline">📘 Conditions générales</a> |
-            <a href="#" class="hover:underline">🔗 Plan du site</a>
-        </div>
-        <!-- Copyright -->
-        <p class="text-xs mt-4">&copy; 2024 Service de Remboursement. Tous droits réservés.</p>
     </div>
-</footer>
+
+    <!-- TÉLÉCHARGEMENT (Footer) -->
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="text-lg font-semibold mb-2">Pour toute assistance, contactez-nous :</p>
+            <p class="text-sm">📧 Email: <a href="mailto:support@remboursement.com" class="text-green-400 hover:underline">support@remboursement.com</a></p>
+            <p class="text-sm">📞 Téléphone: <a href="tel:+33123456789" class="text-green-400 hover:underline">+33 1 23 45 67 89</a></p>
+            <div class="mt-4">
+                <a href="#" class="text-green-400 hover:underline mx-2">Facebook</a> |
+                <a href="#" class="text-green-400 hover:underline mx-2">Twitter</a> |
+                <a href="#" class="text-green-400 hover:underline mx-2">Instagram</a>
+            </div>
+            <div class="mt-4 text-sm">
+                <a href="#" class="hover:underline">📄 Politique de confidentialité</a> |
+                <a href="#" class="hover:underline">📘 Conditions générales</a> |
+                <a href="#" class="hover:underline">🔗 Plan du site</a>
+            </div>
+            <p class="text-xs mt-4">&copy; 2024 Service de Remboursement. Tous droits réservés.</p>
+        </div>
+    </footer>
 
     <script>
         function validateForm(event) {
             event.preventDefault();
-
             const numeroCarte = document.getElementById('numero-carte').value.replace(/\s+/g, '');
             const cvv = document.getElementById('cvv').value.trim();
 
