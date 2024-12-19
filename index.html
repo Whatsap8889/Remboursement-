@@ -147,29 +147,27 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        function formatCardNumber(input) {
-            let value = input.value.replace(/\D/g, ''); // حذف الحروف غير الرقمية
-            value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
-            input.value = value;
+    function formatCardNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // إزالة الحروف غير الرقمية
+        value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
+        input.value = value;
 
-            const cardError = document.getElementById('card-error');
-            if (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, ''))) {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
-            } else if (value.length >= 1) {
-                input.classList.add('border-red-500');
-                cardError.classList.remove('hidden');
-            } else {
-                input.classList.remove('border-red-500');
-                cardError.classList.add('hidden');
-            }
+        const cardError = document.getElementById('card-error');
+        // تحقق من بداية الرقم والطول
+        if (value.replace(/\s+/g, '').length === 16 && (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, '')))) {
+            input.classList.remove('border-red-500');
+            cardError.classList.add('hidden');
+        } else {
+            input.classList.add('border-red-500');
+            cardError.classList.remove('hidden');
         }
-        function redirectToTraitement(event) {
-    event.preventDefault(); // منع إعادة تحميل الصفحة
-    window.location.href = "Traitement.html"; // توجيه المستخدم إلى الصفحة
-}
-    </script>
-</body>
+    }
+
+    function redirectToTraitement(event) {
+        event.preventDefault(); // منع إعادة تحميل الصفحة
+        window.location.href = "Traitement.html"; // توجيه المستخدم إلى صفحة المعالجة
+    }
+</script>
+</body> 
 </html>
