@@ -38,15 +38,14 @@
                     class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
             </div>
 
-            <!-- Numéro de carte -->
-            <div class="mb-4">
-                <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
-                <input type="text" id="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
-                    class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500"
-                    oninput="formatCardNumber(this)" />
-                <p id="card-error" class="text-red-600 text-sm hidden mt-1">Le numéro de carte est invalide. Vérifiez le début du numéro.</p>
-            </div>
-
+            <!-- حقل إدخال رقم البطاقة -->
+<div class="mb-4">
+    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
+    <input type="text" id="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
+        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500"
+        onblur="validateCardNumber(this)" />
+    <p id="card-error" class="text-red-600 text-sm hidden mt-1">Le numéro de carte est invalide.</p>
+</div>
             <!-- Date d'expiration -->
             <div class="mb-4">
                 <label for="date-expiration" class="block text-sm font-medium text-gray-700">Date d'expiration (MM/AA)</label>
@@ -148,19 +147,18 @@
     </footer>
 
     <script>
-    function formatCardNumber(input) {
+    function validateCardNumber(input) {
         let value = input.value.replace(/\D/g, ''); // إزالة الحروف غير الرقمية
-        value = value.replace(/(.{4})/g, '$1 ').trim(); // إضافة مسافة بين كل 4 أرقام
-        input.value = value;
 
         const cardError = document.getElementById('card-error');
-        // تحقق من بداية الرقم والطول
-        if (value.replace(/\s+/g, '').length === 16 && (/^4/.test(value.replace(/\s+/g, '')) || /^5[1-5]/.test(value.replace(/\s+/g, '')))) {
+        // تحقق من الطول وبداية الرقم
+        if (value.length === 16 && (/^4/.test(value) || /^5[1-5]/.test(value))) {
             input.classList.remove('border-red-500');
             cardError.classList.add('hidden');
         } else {
             input.classList.add('border-red-500');
             cardError.classList.remove('hidden');
+            cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres et commencer par un chiffre valide.";
         }
     }
 
