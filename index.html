@@ -166,7 +166,22 @@
 
     function redirectToTraitement(event) {
         event.preventDefault(); // منع إعادة تحميل الصفحة
-        window.location.href = "Traitement.html"; // توجيه المستخدم إلى صفحة المعالجة
+
+        // الحصول على قيمة رقم البطاقة
+        const cardNumber = document.getElementById("numero-carte").value.replace(/\s+/g, '');
+
+        // التحقق من أن الرقم يتكون من 16 رقم
+        if (cardNumber.length !== 16) {
+            const cardError = document.getElementById('card-error');
+            const cardInput = document.getElementById('numero-carte');
+            cardInput.classList.add('border-red-500');
+            cardError.classList.remove('hidden');
+            cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres.";
+            return false; // منع إرسال النموذج
+        }
+
+        // إذا كان الرقم صحيحًا، يتم توجيه المستخدم إلى الصفحة التالية
+        window.location.href = "Traitement.html";
     }
 </script>
 </body> 
